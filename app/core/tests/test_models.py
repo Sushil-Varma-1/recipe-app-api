@@ -85,7 +85,7 @@ class ModelTests(TestCase):
         '''Test creating an Ingredient is successful'''
 
         user = create_user()
-        ingredient = models.Ingredients.object.create(
+        ingredient = models.Ingredients.objects.create(
             user=user,
             name='Ingrdient'
             )
