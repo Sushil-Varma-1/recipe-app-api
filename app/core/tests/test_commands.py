@@ -1,4 +1,4 @@
-# Test custom django command
+'''Test custom django command'''
 
 from unittest.mock import patch
 from psycopg2 import OperationalError as Psycopg2OpError
@@ -11,7 +11,7 @@ from django.test import SimpleTestCase
 class CommandTest(SimpleTestCase):
 
     def test_wait_for_db_ready(self, patched_check):
-        # Test waiting for db command
+        '''Test waiting for db command'''
         patched_check.return_value = True
 
         call_command('wait_for_db')

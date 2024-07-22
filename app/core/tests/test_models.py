@@ -24,7 +24,7 @@ class ModelTests(TestCase):
         self.assertTrue(user.check_password(password))
 
     def test_new_user_email_normalized(self):
-        # test email is normalized for new user
+        '''test email is normalized for new user'''
 
         sample_emails = [
             ['test1@EXAMPLE.com', 'test1@example.com'],
@@ -39,13 +39,13 @@ class ModelTests(TestCase):
             self.assertEqual(user.email, expected)
 
     def test_new_user_without_email_raises_error(self):
-        # Test that creating a user without an email raises a ValueError.
+        '''Test that creating a user without an email raises a ValueError.'''
 
         with self.assertRaises(ValueError):
             get_user_model().objects.create_user("", 'Value error test')
 
     def test_create_superuser(self):
-        # test creating Super user
+        '''test creating Super user'''
 
         user = get_user_model().objects.create_superuser(
             'test@example.com',
@@ -56,7 +56,7 @@ class ModelTests(TestCase):
         self.assertTrue(user.is_staff)
 
     def test_create_recipe(self):
-        # Test creating a recipe is successful
+        '''Test creating a recipe is successful'''
 
         user = get_user_model().objects.create_user(
             'test@example.com',

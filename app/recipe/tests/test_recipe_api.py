@@ -1,4 +1,4 @@
-# Tests for recipe api
+'''Tests for recipe api'''
 
 from django.contrib.auth import get_user_model
 from django.test import TestCase
@@ -17,12 +17,12 @@ RECIPES_URL = reverse('recipe:recipe-list')
 
 
 def detail_url(recipe_id):
-    # Create and return a recipe detail URL
+    '''Create and return a recipe detail URL'''
     return reverse('recipe:recipe-detail', args=[recipe_id])
 
 
 def create_recipe(user, **params):
-    # create and return a recipe
+    '''create and return a recipe'''
 
     defaults = {
         'title': 'Sample recipe title',
@@ -39,18 +39,18 @@ def create_recipe(user, **params):
 
 
 def create_user(**params):
-    # create and return new user
+    '''create and return new user'''
     return get_user_model().objects.create_user(**params)
 
 
 class PublicRecipeAPITest(TestCase):
-    # Test unauthorized API requests
+    '''Test unauthorized API requests'''
 
     def setUp(self):
         self.client = APIClient()
 
     def test_auth_required(self):
-        # Test auth is required to call API
+        '''Test auth is required to call API'''
 
         res = self.client.get(RECIPES_URL)
 
@@ -58,7 +58,7 @@ class PublicRecipeAPITest(TestCase):
 
 
 class PrivateRecipeAPITest(TestCase):
-    # Test authorized API requests
+    '''Test authorized API requests'''
 
     def setUp(self):
         self.client = APIClient()
@@ -67,7 +67,7 @@ class PrivateRecipeAPITest(TestCase):
         self.client.force_authenticate(self.user)
 
     def test_retrieve_recipes(self):
-        # Test retrieving a list of recipes
+        '''Test retrieving a list of recipes'''
 
         create_recipe(user=self.user)
         create_recipe(user=self.user)
@@ -81,7 +81,7 @@ class PrivateRecipeAPITest(TestCase):
         self.assertEqual(res.data, serializer.data)
 
     def test_recipe_list_listed_to_user(self):
-        # Test list of Recipes is limited to authenticated user.
+        '''Test list of Recipes is limited to authenticated user.'''
 
         other_user = create_user(email='otheruser@example.com',
                                  password='otherpass123')
@@ -98,7 +98,7 @@ class PrivateRecipeAPITest(TestCase):
         self.assertEqual(res.data, serializer.data)
 
     def test_get_recipe_detail(self):
-        # Test get recipe detail
+        '''Test get recipe detail'''
 
         recipe = create_recipe(user=self.user)
 
@@ -111,7 +111,7 @@ class PrivateRecipeAPITest(TestCase):
         self.assertEqual(res.data, serializer.data)
 
     def test_create_recipe(self):
-        # Test creating a recipe
+        '''Test creating a recipe'''
 
         payload = {
             'title': 'Sample recipe title 1',
@@ -131,7 +131,7 @@ class PrivateRecipeAPITest(TestCase):
         self.assertEqual(recipe.user, self.user)
 
     def test_partial_update(self):
-        # Test partial update of Recipe
+        '''Test partial update of Recipe'''
 
         original_link = 'https://example.com/recipe.pdf'
         recipe = create_recipe(
@@ -151,7 +151,7 @@ class PrivateRecipeAPITest(TestCase):
         self.assertEqual(recipe.user, self.user)
 
     def test_full_update(self):
-        # Test full update of recipe
+        '''Test full update of recipe'''
 
         recipe = create_recipe(
             user=self.user,
@@ -180,7 +180,7 @@ class PrivateRecipeAPITest(TestCase):
         self.assertEqual(recipe.user, self.user)
 
     def test_update_user_returns_error(self):
-        # Test changing the Recipe user results in an error
+        '''Test changing the Recipe user results in an error'''
 
         new_user = create_user(email='new_user@example.com',
                                password='newpass123')
@@ -194,7 +194,7 @@ class PrivateRecipeAPITest(TestCase):
         self.assertEqual(recipe.user, self.user)
 
     def test_delete_recipe(self):
-        # Test deleting a recipe Successful
+        '''Test deleting a recipe Successful'''
 
         recipe = create_recipe(user=self.user)
 
@@ -205,7 +205,7 @@ class PrivateRecipeAPITest(TestCase):
         self.assertFalse(Recipe.objects.filter(id=recipe.id).exists())
 
     def test_delete_other_users_recipe_error(self):
-        # test trying to delete recipes gives error
+        '''test trying to delete recipes gives error'''
 
         new_user = create_user(email='new_user@example.com',
                                password='test123')

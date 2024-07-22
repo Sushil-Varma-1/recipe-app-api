@@ -1,4 +1,4 @@
-# test for admin modification
+'''test for admin modification'''
 
 from django.test import TestCase, Client
 from django.contrib.auth import get_user_model
@@ -6,10 +6,10 @@ from django.urls import reverse
 
 
 class AdminSiteTest(TestCase):
-    # Test for Django Admin
+    '''Test for Django Admin'''
 
     def setUp(self):
-        # create user and client
+        '''create user and client'''
         self.client = Client()
         self.admin_user = get_user_model().objects.create_superuser(
             email='admin@example.com',
@@ -23,7 +23,7 @@ class AdminSiteTest(TestCase):
         )
 
     def test_users_list(self):
-        # Test that users are listed on page.
+        '''Test that users are listed on page.'''
         url = reverse('admin:core_user_changelist')
         res = self.client.get(url)
 
@@ -31,14 +31,14 @@ class AdminSiteTest(TestCase):
         self.assertContains(res, self.user.email)
 
     def test_edit_user_page(self):
-        # Test edit user page
+        '''Test edit user page'''
         url = reverse('admin:core_user_change', args=[self.user.id])
         res = self.client.get(url)
 
         self.assertEqual(res.status_code, 200)
 
     def test_create_user_page(self):
-        # Test create user page
+        '''Test create user page'''
         url = reverse('admin:core_user_add')
         res = self.client.get(url)
 
