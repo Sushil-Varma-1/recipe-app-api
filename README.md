@@ -1,5 +1,5 @@
 # recipe-app-api
-Food recipes API that returns the recipe and ingredients for the specified meals.
+Recipes API that returns the recipe and ingredients for the specified meals.
 
 # How to Use
 -  Install Python and docker on your system.
