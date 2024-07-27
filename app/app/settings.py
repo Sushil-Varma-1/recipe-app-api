@@ -97,7 +97,7 @@ REST_FRAMEWORK = {
 }
 
 SPECTACULAR_SETTINGS = {
-    'COMPONENT_SPILT_REQUEST': True
+    'COMPONENT_SPLIT_REQUEST': True
 }
 
 # Password validation
